@@ -9,14 +9,17 @@ class ErrorBoundary extends Component <PropsWithChildren> {
 	}
 
 	componentDidCatch(error: Error) {
-		console.log(error);
-		
+
 		this.setState({
 			hasError: true,
 			error
 		});
 	}
 
+	onError = () => {
+        this.setState({hasError: true})
+    }
+	
 	render() {
 		if(this.state.hasError){
 			console.log(this.state);
@@ -33,6 +36,7 @@ class ErrorBoundary extends Component <PropsWithChildren> {
 		}
 			return(
 				<div>
+					<button className="error-btn" onClick = {this.onError}>Throw Error</button>
 					{this.props.children}
 				</div>
 			) 

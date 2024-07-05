@@ -31,17 +31,12 @@ class Search extends Component <MyProps> {
         localStorage.setItem('search', this.state.search)
     }
 
-    onError = () => {
-        // this.error.one = 1;
-    }
-
     render(): React.ReactNode {
         const localSearch = this.state.search;
         return(
             <div className="search">
                 <input className="search-input" onChange = {this.onChangeSearch} value={localSearch}></input>
                 <button className="search-btn" onClick = {this.onClickSearch}>Search</button>
-                <button className="error-btn" onClick = {this.onError}>Throw Error</button>
             </div>
         )
     }
