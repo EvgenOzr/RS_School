@@ -1,1 +1,1 @@
-Task 1. Search in https://swapi.dev/. Search people in this API.
+Task 1. Search in https://swapi.dev/. C

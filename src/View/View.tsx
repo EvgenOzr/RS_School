@@ -20,7 +20,6 @@ class View extends Component <IProps> {
     static propTypes: { search: PropTypes.Requireable<string>; };
 
     componentDidUpdate(prevProps:IProps): void {
-        console.log(this.props.search);
         if((prevProps.search !== this.props.search) && (this.props.search !== '')) {
             this.setState({...this.state, loading: true})
             this.getSearchResults(this.props.search)
@@ -50,12 +49,12 @@ class View extends Component <IProps> {
     }
 
     render(): React.ReactNode {
-        console.log(this.state.view);
 
         const { view, loading, error } = this.state;
 
         if(loading) return <div>Loading...</div>
         if(error) return <div>Nothing found</div>
+
         return(
             <div className="view">
                 <h2>Results</h2>
