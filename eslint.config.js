@@ -20,6 +20,7 @@ export default [
         "semi": "error",
         "no-unused-vars": "error",
         "no-undef": "error",
+        "react-compiler/react-compiler": "error",
     }
   },
   eslintConfigPrettier,

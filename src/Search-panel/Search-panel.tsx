@@ -8,7 +8,8 @@ type MyProps = {
 class Search extends Component <MyProps> {
 
     state = {
-        search: ''
+        search: '',
+        hasError: false
     }
     
     componentDidMount(): void {
@@ -16,6 +17,10 @@ class Search extends Component <MyProps> {
         if(search) {
             this.setState({search});
         }
+    }
+
+    componentDidUpdate() {
+        if (this.state.hasError) foo.bar === 1;
     }
 
     onChangeSearch = (e: {target: HTMLInputElement}) => {
@@ -31,12 +36,17 @@ class Search extends Component <MyProps> {
         localStorage.setItem('search', this.state.search)
     }
 
+    onError = () =>{
+        this.setState({hasError: true})
+    }
+
     render(): React.ReactNode {
         const localSearch = this.state.search;
         return(
             <div className="search">
                 <input className="search-input" onChange = {this.onChangeSearch} value={localSearch}></input>
                 <button className="search-btn" onClick = {this.onClickSearch}>Search</button>
+                <button className="error-btn" onClick = {this.onError}>Throw Error</button>
             </div>
         )
     }

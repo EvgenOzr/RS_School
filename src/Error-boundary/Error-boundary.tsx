@@ -8,13 +8,10 @@ class ErrorBoundary extends Component <PropsWithChildren> {
 		error: ''
 	}
 
-	componentDidCatch(error: Error) {
-
-		this.setState({
-			hasError: true,
-			error
-		});
-	}
+	static getDerivedStateFromError() {
+		// Update state so the next render will show the fallback UI.
+		return { hasError: true };
+	  }
 
 	onError = () => {
         this.setState({hasError: true})
@@ -22,8 +19,6 @@ class ErrorBoundary extends Component <PropsWithChildren> {
 	
 	render() {
 		if(this.state.hasError){
-			console.log(this.state);
-			
 			return (
 				<div className="error-indicator">
 					<span className="error">Error</span>
@@ -36,7 +31,6 @@ class ErrorBoundary extends Component <PropsWithChildren> {
 		}
 			return(
 				<div>
-					<button className="error-btn" onClick = {this.onError}>Throw Error</button>
 					{this.props.children}
 				</div>
 			) 
