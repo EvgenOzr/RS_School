@@ -24,8 +24,6 @@ class Search extends Component <MyProps> {
     }
 
     onChangeSearch = (e: {target: HTMLInputElement}) => {
-        console.log(typeof(e));
-        
         const search: string = e.target.value;
         search.trim()
         this.setState({search});

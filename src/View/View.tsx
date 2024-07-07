@@ -20,7 +20,8 @@ class View extends Component <IProps> {
     static propTypes: { search: PropTypes.Requireable<string>; };
 
     componentDidUpdate(prevProps:IProps): void {
-        if(prevProps.search !== this.props.search) {
+        console.log(this.props.search);
+        if((prevProps.search !== this.props.search) && (this.props.search !== '')) {
             this.setState({...this.state, loading: true})
             this.getSearchResults(this.props.search)
                 .then(this.onSearchLoaded)
