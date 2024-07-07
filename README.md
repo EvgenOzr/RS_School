@@ -1,1 +1,1 @@
-Task 1. Search in https://swapi.dev/. C
+Task 1. Search in https://swapi.dev/. You can find planets, people, species, starships, vehicles, films.

@@ -55,11 +55,25 @@ class View extends Component <IProps> {
         if(loading) return <div>Loading...</div>
         if(error) return <div>Nothing found</div>
 
+        let title = '',
+             property = '',
+             i = 0;
+
+        for (let key in view[0]) {
+            if (i === 0){
+                title = key;
+            } else if(i === 1){
+                property = key;
+            }
+            i++;
+        }
+
         return(
             <div className="view">
                 <h2>Results</h2>
-                {view.map(({name}, idx) => {
-                    return <div key={idx}>{name}</div>
+                {view.map((elem, idx) => {
+                    console.log(elem[title], elem[property]);
+                    return <div key={idx}>{elem[title]} , {property} - {elem[property]}</div>
                 })}
             </div>
         )
