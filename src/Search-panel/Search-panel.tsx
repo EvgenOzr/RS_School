@@ -30,7 +30,8 @@ const Search = ({onUpdateSearch} : MyProps)  => {
 
 
     useEffect (() => {
-        if (hasError) foo.bar === 1;
+        if (hasError) console.log('Error');
+        
     }, [hasError])
 
     const onChangeSearch = (e: {target: HTMLInputElement}) => {

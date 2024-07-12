@@ -1,4 +1,4 @@
-import React, {MouseEventHandler} from "react";
+import React from "react";
 import './Card-list.css'
 
 interface CardListProps {
@@ -17,7 +17,11 @@ const CardList = ({data, onItemSelected} : CardListProps) => {
     const items = data.map((item: CardListItem) => {
         const id = item.url.replace(/\D/gi, '');
         let title = '';
-        (item.name) ? title = item.name : title = item.title;
+        if (item.name) {
+            title = item.name; 
+        }else{
+            title = item.title;
+        } 
         return (
             <li className="list-group-item"
             key={id}

@@ -9,9 +9,17 @@ interface CardLisDetailsProps {
     id: string
 }
 
+interface CardDetailsType {
+    cardDetailsView: {[key: string]: string},
+    loading: boolean,
+    error: boolean
+}
+
+// type cardDetailsViewType = keyof typeof CardDetailsType
+
 const CardListDetails = ({search, id}: CardLisDetailsProps) => {
     // console.log(search, id);
-    const [cardDetails, setCardDetails] = useState({
+    const [cardDetails, setCardDetails] = useState<CardDetailsType>({
         cardDetailsView: {},
         loading: false,
         error: false
@@ -62,8 +70,8 @@ const CardListDetails = ({search, id}: CardLisDetailsProps) => {
     if (cardDetails && show) {
         // console.log(cardDetails.cardDetailsView);
         const {cardDetailsView} = cardDetails;
-        let cardDetailsData: ReactElement[] = [];
-        for (let key in cardDetailsView) {
+        const cardDetailsData: ReactElement[] = [];
+        for (const key in cardDetailsView) {
             if(typeof cardDetailsView[key] === 'string'){
                 cardDetailsData.push(
                     <li className='list-group-item view-item' key={key}>
