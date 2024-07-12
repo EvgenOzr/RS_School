@@ -14,7 +14,7 @@ const App = () => {
         setSearch(search)
     }
 
-	let NoMatch = () => {
+	const NoMatch = () => {
 		const location = useLocation();
 	  
 		return (

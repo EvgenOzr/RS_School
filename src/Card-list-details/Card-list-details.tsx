@@ -3,7 +3,6 @@ import SwapiService from "../Services/swapi-service";
 import Spinner from '../Spinner/Spinner';
 import ErrorIndicator from '../Error-indicator/Error-indicator';
 import './Card-list-details.css'
-import { string } from "prop-types";
 
 interface CardLisDetailsProps {
     search: string,
