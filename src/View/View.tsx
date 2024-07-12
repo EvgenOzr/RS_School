@@ -1,87 +1,102 @@
-import React, {Component} from "react";
-import PropTypes from 'prop-types';
+import React, {useState, useEffect, useRef} from "react";
 import SwapiService from "../Services/swapi-service";
 import './View.css';
+import Row from "../Row/Row";
+import CardList from "../Card-list/Card-list";
+import CardListDetails from "../Card-list-details/Card-list-details";
+import Spinner from "../Spinner/Spinner";
+import { useNavigate} from "react-router-dom";
 
 interface IProps {
     search: string,
 }
 
-class View extends Component <IProps> {
+interface View {
+    searchView: [],
+    loading: boolean,
+    error: boolean
+}
 
-    state = {
-        view: [],
-        loading: false,
-        error: false
-    }
+const View = ({search}: IProps) =>  {
 
-    swapiService = new SwapiService();
-
-    static propTypes: { search: PropTypes.Requireable<string>; };
-
-    componentDidUpdate(prevProps:IProps): void {
-        if((prevProps.search !== this.props.search) && (this.props.search !== '')) {
-            this.setState({...this.state, loading: true})
-            this.getSearchResults(this.props.search)
-                .then(this.onSearchLoaded)
-                .catch(this.onError)
+    let navigate = useNavigate();
+    const [view, setView] = useState<View>(
+        {
+            searchView: [],
+            loading: false,
+            error: false
         }
-    }
+    );
+    const [id, setId] = useState('')
+    const page = useRef(1)
 
-    onSearchLoaded = (answer: []) => {
-        this.setState({
-            view: answer,
+    useEffect(() =>{
+        if (search !== ''){
+            setView({
+                ...view,
+                loading: true
+            })
+            getSearchResults(search)
+                .then(onSearchLoaded)
+                .catch(onError)
+        }
+    }, [search])
+
+    const onSearchLoaded = (answer: []) => {
+        navigate(`/view/${page.current}`)
+        setView({
+            searchView: answer,
             loading: false,
             error: false
         })
+        setId('')
     }
 
-    onError = () => {
-        this.setState({
+    const onError = () => {
+        setView({
+            ...view,
             loading: false,
             error: true
         })
     }
 
-    getSearchResults = async (item: string) => {
-        const res = await this.swapiService.getSearch(item)
+    const getSearchResults = async (item: string) => {
+        const res = await SwapiService(item)
         return res.results;
     }
 
-    render(): React.ReactNode {
 
-        const { view, loading, error } = this.state;
-
-        if(loading) return <div>Loading...</div>
-        if(error) return <div>Nothing found</div>
-
-        let title = '',
-             property = '',
-             i = 0;
-
-        for (let key in view[0]) {
-            if (i === 0){
-                title = key;
-            } else if(i === 1){
-                property = key;
-            }
-            i++;
-        }
-
-        return(
-            <div className="view">
-                <h2>Results</h2>
-                {view.map((elem, idx) => {
-                    console.log(elem[title], elem[property]);
-                    return <div key={idx}>{elem[title]} , {property} - {elem[property]}</div>
-                })}
-            </div>
-        )
+    const onItemSelected = (id: string) => {
+        setId(id)
     }
-}
 
-View.propTypes = {
-    search: PropTypes.string
+    const onClickNextPage = () => {
+        if (search !== ''){
+            setView({
+                ...view,
+                loading: true
+            })
+            page.current += 1;
+            navigate(`/view/${page.current}`)
+            getSearchResults(`${search}/?page=${page.current}`)
+                .then(onSearchLoaded)
+                .catch(onError);
+
+        }
+    }
+
+    if(view.loading) return <Spinner/>
+    if(view.error) return <div>Nothing found</div>
+    if(search === '') return null;
+
+    return(
+        <div className="view">
+            <h2>Results</h2>
+            <button onClick = {onClickNextPage}>Next Page</button>
+            <Row left={<CardList data={view.searchView} onItemSelected={onItemSelected}/>} right={<CardListDetails search={search} id={id}/>}></Row>
+        </div>
+    )
+
 }
 
 export default View;

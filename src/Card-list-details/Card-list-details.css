@@ -1,0 +1,9 @@
+.view-details {
+    display: flex;
+    /* margin-top: 1rem; */
+    flex-direction: row !important;
+    padding: 0 !important; 
+}
+.view-item{
+    padding: 5px !important;
+}

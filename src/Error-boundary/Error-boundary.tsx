@@ -1,5 +1,7 @@
 import React, { Component, PropsWithChildren} from 'react';
 import './Error-boundary.css';
+import '../Error-indicator/Error-indicator'
+import ErrorIndicator from '../Error-indicator/Error-indicator';
 
 class ErrorBoundary extends Component <PropsWithChildren> {
 
@@ -20,13 +22,7 @@ class ErrorBoundary extends Component <PropsWithChildren> {
 	render() {
 		if(this.state.hasError){
 			return (
-				<div className="error-indicator">
-					<span className="error">Error</span>
-					<span>
-						An error occured!
-					</span>
-					<span>{this.state.error}</span>
-				</div>
+				<ErrorIndicator/>
 			)
 		}
 			return(

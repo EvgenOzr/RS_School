@@ -1,53 +1,60 @@
-import React, {Component} from "react";
+import React, {useState, useEffect} from "react";
 import './Search-panel.css'
 
 type MyProps = {
     onUpdateSearch: (arg0: string) => void
 }
 
-class Search extends Component <MyProps> {
+const Search = ({onUpdateSearch} : MyProps)  => {
 
-    state = {
-        search: '',
-        hasError: false
-    }
+    const [search, setSearch] = useState('')
+    const [hasError, setHasError] = useState(false)
+
     
-    componentDidMount(): void {
-        const search = localStorage.getItem('search');
-        if(search) {
-            this.setState({search});
+    // componentDidMount(): void {
+    //     const search = localStorage.getItem('search');
+    //     if(search) {
+    //         this.setState({search});
+    //     }
+    // }
+
+    // componentDidUpdate() {
+    //     if (this.state.hasError) foo.bar === 1;
+    // }
+    useEffect(() => {
+        const searchLocal  = localStorage.getItem('search');
+        if(typeof searchLocal === 'string'){
+            setSearch(searchLocal);
         }
-    }
+    }, [])
 
-    componentDidUpdate() {
-        if (this.state.hasError) foo.bar === 1;
-    }
 
-    onChangeSearch = (e: {target: HTMLInputElement}) => {
-        const search: string = e.target.value;
+    useEffect (() => {
+        if (hasError) foo.bar === 1;
+    }, [hasError])
+
+    const onChangeSearch = (e: {target: HTMLInputElement}) => {
+        const searchRes: string = e.target.value;
         search.trim()
-        this.setState({search});
+        setSearch(searchRes)
     }
 
-    onClickSearch = () => {
-        this.props.onUpdateSearch(this.state.search);
-        localStorage.setItem('search', this.state.search)
+    const onClickSearch = () => {
+        onUpdateSearch(search);
+        localStorage.setItem('search', search)
     }
 
-    onError = () =>{
-        this.setState({hasError: true})
+    const onError = () =>{
+       setHasError(true)
     }
 
-    render(): React.ReactNode {
-        const localSearch = this.state.search;
-        return(
-            <div className="search">
-                <input className="search-input" onChange = {this.onChangeSearch} value={localSearch}></input>
-                <button className="search-btn" onClick = {this.onClickSearch}>Search</button>
-                <button className="error-btn" onClick = {this.onError}>Throw Error</button>
-            </div>
-        )
-    }
+    return(
+        <div className="search">
+            <input className="search-input" onChange = {onChangeSearch} value={search}></input>
+            <button className="search-btn" onClick = {onClickSearch}>Search</button>
+            <button className="error-btn" onClick = {onError}>Throw Error</button>
+        </div>
+    )
 }
 
 export default Search;
