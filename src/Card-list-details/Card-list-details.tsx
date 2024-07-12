@@ -1,4 +1,4 @@
-import React, {useState, useEffect}from "react";
+import React, {useState, useEffect, ReactElement}from "react";
 import SwapiService from "../Services/swapi-service";
 import Spinner from '../Spinner/Spinner';
 import ErrorIndicator from '../Error-indicator/Error-indicator';
@@ -63,7 +63,7 @@ const CardListDetails = ({search, id}: CardLisDetailsProps) => {
     if (cardDetails && show) {
         // console.log(cardDetails.cardDetailsView);
         const {cardDetailsView} = cardDetails;
-        let cardDetailsData = [];
+        let cardDetailsData: ReactElement[] = [];
         for (let key in cardDetailsView) {
             if(typeof cardDetailsView[key] === 'string'){
                 cardDetailsData.push(

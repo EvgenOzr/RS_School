@@ -1,1 +1,2 @@
 npm run prepare
+npm run lint

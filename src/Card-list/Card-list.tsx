@@ -8,18 +8,21 @@ interface CardListProps {
 
 interface CardListItem {
     name: string,
-    url: string
+    url: string,
+    title: string
 }
 const CardList = ({data, onItemSelected} : CardListProps) => {
 
     // const {data, onItemSelected} = props;
     const items = data.map((item: CardListItem) => {
         const id = item.url.replace(/\D/gi, '');
+        let title = '';
+        (item.name) ? title = item.name : title = item.title;
         return (
             <li className="list-group-item"
             key={id}
             onClick = {() => onItemSelected(id)}>
-                {item.name}
+                {title}
             </li>
         )
     })

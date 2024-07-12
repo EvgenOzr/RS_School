@@ -5,7 +5,7 @@ import Row from "../Row/Row";
 import CardList from "../Card-list/Card-list";
 import CardListDetails from "../Card-list-details/Card-list-details";
 import Spinner from "../Spinner/Spinner";
-import { useNavigate} from "react-router-dom";
+import { useLocation, useNavigate, useParams} from "react-router-dom";
 
 interface IProps {
     search: string,
@@ -20,6 +20,9 @@ interface View {
 const View = ({search}: IProps) =>  {
 
     let navigate = useNavigate();
+    let location = useLocation();
+    console.log(location);
+    
     const [view, setView] = useState<View>(
         {
             searchView: [],
@@ -43,6 +46,9 @@ const View = ({search}: IProps) =>  {
     }, [search])
 
     const onSearchLoaded = (answer: []) => {
+        // page.current = 1;
+        console.log(answer);
+        
         navigate(`/view/${page.current}`)
         setView({
             searchView: answer,
