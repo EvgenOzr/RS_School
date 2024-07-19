@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import './Card-list.css'
+import { ThemeContext } from "../Context/Context";
+
 
 interface CardListProps {
     data: [],
@@ -12,7 +14,7 @@ interface CardListItem {
     title: string
 }
 const CardList = ({data, onItemSelected} : CardListProps) => {
-
+    const theme = useContext(ThemeContext);
     // const {data, onItemSelected} = props;
     const items = data.map((item: CardListItem) => {
         const id = item.url.replace(/\D/gi, '');
@@ -23,7 +25,7 @@ const CardList = ({data, onItemSelected} : CardListProps) => {
             title = item.title;
         } 
         return (
-            <li className="list-group-item"
+            <li className={`list-group-item ${theme}`}
             key={id}
             onClick = {() => onItemSelected(id)}>
                 {title}

@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from "react";
-import './Search-panel.css'
+import React, {useState, useEffect, useContext} from "react";
+import './Search-panel.css';
+import { ThemeContext } from "../Context/Context";
 
 type MyProps = {
     onUpdateSearch: (arg0: string) => void
@@ -9,25 +10,14 @@ const Search = ({onUpdateSearch} : MyProps)  => {
 
     const [search, setSearch] = useState('')
     const [hasError, setHasError] = useState(false)
+    const theme = useContext(ThemeContext)
 
-    
-    // componentDidMount(): void {
-    //     const search = localStorage.getItem('search');
-    //     if(search) {
-    //         this.setState({search});
-    //     }
-    // }
-
-    // componentDidUpdate() {
-    //     if (this.state.hasError) foo.bar === 1;
-    // }
     useEffect(() => {
         const searchLocal  = localStorage.getItem('search');
         if(typeof searchLocal === 'string'){
             setSearch(searchLocal);
         }
     }, [])
-
 
     useEffect (() => {
         if (hasError) console.log('Error');
@@ -51,9 +41,9 @@ const Search = ({onUpdateSearch} : MyProps)  => {
 
     return(
         <div className="search">
-            <input className="search-input" onChange = {onChangeSearch} value={search}></input>
-            <button className="search-btn" onClick = {onClickSearch}>Search</button>
-            <button className="error-btn" onClick = {onError}>Throw Error</button>
+            <input className={`search-input ${theme}`} onChange = {onChangeSearch} value={search}></input>
+            <button className={`search-btnt ${theme}`} onClick = {onClickSearch}>Search</button>
+            <button className={`error-btn ${theme}`} onClick = {onError}>Throw Error</button>
         </div>
     )
 }

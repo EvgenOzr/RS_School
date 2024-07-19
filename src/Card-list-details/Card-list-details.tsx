@@ -1,8 +1,9 @@
-import React, {useState, useEffect, ReactElement}from "react";
+import React, {useState, useEffect, ReactElement, useContext}from "react";
 import SwapiService from "../Services/swapi-service";
 import Spinner from '../Spinner/Spinner';
 import ErrorIndicator from '../Error-indicator/Error-indicator';
 import './Card-list-details.css'
+import { ThemeContext } from "../Context/Context";
 
 interface CardLisDetailsProps {
     search: string,
@@ -24,7 +25,8 @@ const CardListDetails = ({search, id}: CardLisDetailsProps) => {
         loading: false,
         error: false
     })
-    const [show, setShow] = useState(true)
+    const [show, setShow] = useState(true);
+    const theme = useContext(ThemeContext);
 
     useEffect(() => {
         if(id !== ''){
@@ -74,7 +76,7 @@ const CardListDetails = ({search, id}: CardLisDetailsProps) => {
         for (const key in cardDetailsView) {
             if(typeof cardDetailsView[key] === 'string'){
                 cardDetailsData.push(
-                    <li className='list-group-item view-item' key={key}>
+                    <li className={`list-group-item view-item ${theme}`} key={key}>
                         <span>{key}: </span>
                         <span>{cardDetailsView[key]}</span>
                     </li>
@@ -83,8 +85,9 @@ const CardListDetails = ({search, id}: CardLisDetailsProps) => {
         }
         
         return (
-            <div className="view-details card">
-                <ul className="list-group list-group-flush">
+            <div className="view-details">
+                {/* <ul className="list-group list-group-flush"> */}
+                <ul className="list-group list-group-flush ">
                     {cardDetailsData}
                 </ul>
                 <button type="button" className="btn-close" aria-label="Close" onClick={changeShow}></button>
