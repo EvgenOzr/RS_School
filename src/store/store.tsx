@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit"
-import searchReducer from "./searchSlice";
-
+import { swApi } from "../Services/swapi-service";
+import saveItemSlice from './saveItemSlice'
 
 export const store = configureStore({
-    reducer: {
-      search: searchReducer,
-    }
+  reducer: {
+    favorites: saveItemSlice,
+    [swApi.reducerPath]: swApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => 
+  getDefaultMiddleware().concat(swApi.middleware),
 })
 
 export default store;

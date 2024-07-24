@@ -1,10 +1,15 @@
-const SwapiService =  async (search: string) => {
-	const res = await fetch(`https://swapi.dev/api/${search}`);
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+// import {MutationTrigger} from "@reduxjs/toolkit/dist/query/react/buildHooks";
 
-	if (!res.ok) {
-	throw new Error(`Could not fetch ${search}` + `, received ${res.status}`)
-	}
-	return await res.json();
-}
+export const swApi = createApi({
+	reducerPath: 'swApi',
+	baseQuery: fetchBaseQuery({baseUrl: 'https://swapi.dev/api/'}),
+	endpoints: (builder) => ({
+		getSearch: builder.query({
+			query: (search, ) => `${search}`
+		}),
+	})
+})
 
-export default SwapiService;
+export const {useGetSearchQuery} = swApi;
+

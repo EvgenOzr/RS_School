@@ -1,6 +1,8 @@
 import React, {useState, useEffect, useContext} from "react";
 import './Search-panel.css';
 import { ThemeContext } from "../Context/Context";
+import { useNavigate } from "react-router-dom";
+
 
 type MyProps = {
     onUpdateSearch: (arg0: string) => void
@@ -9,8 +11,8 @@ type MyProps = {
 const Search = ({onUpdateSearch} : MyProps)  => {
 
     const [search, setSearch] = useState('')
-    const [hasError, setHasError] = useState(false)
     const theme = useContext(ThemeContext)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const searchLocal  = localStorage.getItem('search');
@@ -18,11 +20,6 @@ const Search = ({onUpdateSearch} : MyProps)  => {
             setSearch(searchLocal);
         }
     }, [])
-
-    useEffect (() => {
-        if (hasError) console.log('Error');
-        
-    }, [hasError])
 
     const onChangeSearch = (e: {target: HTMLInputElement}) => {
         const searchRes: string = e.target.value;
@@ -33,17 +30,13 @@ const Search = ({onUpdateSearch} : MyProps)  => {
     const onClickSearch = () => {
         onUpdateSearch(search);
         localStorage.setItem('search', search)
-    }
-
-    const onError = () =>{
-       setHasError(true)
+        navigate(`/view/1`)
     }
 
     return(
         <div className="search">
             <input className={`search-input ${theme}`} onChange = {onChangeSearch} value={search}></input>
-            <button className={`search-btnt ${theme}`} onClick = {onClickSearch}>Search</button>
-            <button className={`error-btn ${theme}`} onClick = {onError}>Throw Error</button>
+            <button className={`search-btn ${theme}`} onClick = {onClickSearch}>Search</button>
         </div>
     )
 }
