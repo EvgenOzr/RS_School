@@ -1,0 +1,21 @@
+.view {
+    padding-top: 15px;
+}
+.header {
+    color: #000 !important;
+}
+
+.light {
+    background-color: #fff;
+    color:#000
+}
+  
+.dark {
+    background-color: #000;
+    color: #fff;
+}
+
+.pags{
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
