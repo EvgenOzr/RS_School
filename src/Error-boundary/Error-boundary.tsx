@@ -2,6 +2,8 @@ import React, { Component, PropsWithChildren} from 'react';
 import './Error-boundary.css';
 import '../Error-indicator/Error-indicator'
 import ErrorIndicator from '../Error-indicator/Error-indicator';
+import PropTypes from 'prop-types'
+
 
 class ErrorBoundary extends Component <PropsWithChildren> {
 
@@ -9,6 +11,7 @@ class ErrorBoundary extends Component <PropsWithChildren> {
 		hasError: false,
 		error: ''
 	}
+	static propTypes: { children: PropTypes.Requireable<PropTypes.ReactNodeLike>; };
 
 	static getDerivedStateFromError() {
 		// Update state so the next render will show the fallback UI.
@@ -31,6 +34,10 @@ class ErrorBoundary extends Component <PropsWithChildren> {
 				</div>
 			) 
 		}
+}
+
+ErrorBoundary.propTypes = {
+	children: PropTypes.node
 }
 
 export default ErrorBoundary;

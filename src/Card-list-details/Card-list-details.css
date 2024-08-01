@@ -1,9 +1,18 @@
 .view-details {
-    display: flex;
-    /* margin-top: 1rem; */
+    /* display: flex;
+    margin-top: 1rem; 
     flex-direction: row !important;
-    padding: 0 !important; 
+    padding: 0 !important;  */
+    position: relative;
 }
+
 .view-item{
     padding: 5px !important;
+    /* cursor:auto !important */
+}
+
+.btn-close{
+    position: absolute;
+    top: 0;
+    right: -25px;
 }
